@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Student, Book, Borrow
 from django.utils import timezone
 from datetime import datetime
-
+from .quick_sort import qSort
 # Create your views here.
 def home(request):
     book_count = Book.objects.count
@@ -24,7 +24,10 @@ def home(request):
 
 #Books listing
 def books(request):
-    books = Book.objects.all()
+    books = list(Book.objects.all())
+    if request.method == 'POST':
+        key = request.POST.get('sort_by')
+        qSort(books, key)
     return render(request, 'library/books.html', {'books': books})
 
 #Students listing
@@ -32,7 +35,7 @@ def students(request):
     students = Student.objects.all()
     return render(request, 'library/students.html', {'students': students})
 
-#Borrowal listing
+#Borrow listing
 def borrows(request):
     borrows = Borrow.objects.all()
     for b in borrows:
@@ -44,7 +47,7 @@ def borrows(request):
             s.save()
     return render(request, 'library/borrows.html', {'borrows': borrows})
 
-#Add Books
+# Add Books
 def add_book(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -61,7 +64,7 @@ def add_book(request):
         return redirect('books')
     return render(request, 'library/add-book.html')
 
-#Add Students
+# Add Students
 def add_student(request):
     if request.method == 'POST':
         fullname = request.POST.get('fullname')

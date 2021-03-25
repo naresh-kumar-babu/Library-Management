@@ -1,6 +1,6 @@
 # Library-Management System
 
-## Function 
+## Functions
 ------
 ### Admin
 

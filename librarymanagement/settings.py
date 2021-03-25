@@ -22,6 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'otec@1xzg_3*3hzzj^1015r=*$n5v9^ay4^w2)&m+0yk-n@h7$'
 
+STATIC_URL = '/static/'
+STATIC_ROOT  = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIR = [
+    os.path.join(BASE_DIR, 'static')
+]
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

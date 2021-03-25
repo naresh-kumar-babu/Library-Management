@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Borrowals</title>
+    <title>Books</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
@@ -24,8 +24,8 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'borrows' %}"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'students' %}"><i class="fa fa-book"></i><span>Students</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'borrows' %}"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'students' %}"><i class="fa fa-book"></i><span>Students</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -55,29 +55,34 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Borrowals</h3>
+                    <h3 class="text-dark mb-4">Students</h3>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Borrow Info</p>
+                            <p class="text-primary m-0 fw-bold">Students Info</p>
                         </div>
+                        <a href="{% url 'add-student' %}"><button type="button" style="background-color: green; color: white; padding: 5px; border-color: green; border-radius: 5px; margin: 20px;">+ Add Student</button></a>
                         <div class="card-body">
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Borrower</th>
-                                            <th>Book</th>
-                                            <th>Borrowed on</th>
-                                            <th>Due Date</th>
+                                            <th>Fullname</th>
+                                            <th>Roll number</th>
+                                            <th>Email address</th>
+                                            <th>Academic year</th>
+                                            <th>Fine amount</th>
+                                            <th>Operation</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for borrow in borrows %}
-                                            <tr>
-                                                <td>{{borrow.borrower}}</td>
-                                                <td>{{borrow.book}}</td>
-                                                <td>{{borrow.borrowed_on}}</td>
-                                                <td>{{borrow.due_date}}</td>
+                                        {% for student in students %}
+                                            <tr style="padding: 5px;">
+                                                <td>{{student.fullname}}</td>
+                                                <td>{{student.roll_number}}</td>
+                                                <td>{{student.email}}</td>
+                                                <td>{{student.academic_year}}</td>
+                                                <td>{{student.fine_amount}}</td>
+                                                <td><a href="/delete-student/{{student.id}}/"><button type="button" style="background-color: red; color: white; padding: 2px; border-color: red; border-radius: 5px;">Remove</button></a>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

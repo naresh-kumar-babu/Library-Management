@@ -12,7 +12,7 @@ class Student(models.Model):
             ('IV year', 'IV year')
         )
     )
-    fine_amount = models.FloatField(null=True)
+    fine_amount = models.FloatField(null=True, default=0.0)
 
     def __str__(self):
         return self.fullname

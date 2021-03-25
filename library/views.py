@@ -32,7 +32,10 @@ def books(request):
 
 #Students listing
 def students(request):
-    students = Student.objects.all()
+    students = list(Student.objects.all())
+    if request.method == 'POST':
+        key = request.POST.get('sort_by')
+        qSort(students, key.lower())
     return render(request, 'library/students.html', {'students': students})
 
 #Borrow listing

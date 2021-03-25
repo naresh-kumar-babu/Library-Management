@@ -5,12 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Books</title>
+    <title>Add book</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/fontawesome5-overrides.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
 </head>
 
 <body id="page-top">
@@ -22,9 +23,9 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'borrows' %}"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fa fa-book"></i><span>Books</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -54,40 +55,16 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Books</h3>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Books Info</p>
-                        </div>
-                        <a href="{% url 'add-book' %}"><button type="button" style="background-color: green; color: white; padding: 5px; border-color: green; border-radius: 5px; margin: 20px;">+ Add Book</button></a>
-                        <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Author</th>
-                                            <th>ISBN number</th>
-                                            <th>Copies</th>
-                                            <th>Operation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for book in books %}
-                                            <tr style="padding: 5px;">
-                                                <td>{{book.title}}</td>
-                                                <td>{{book.author}}</td>
-                                                <td>{{book.isbn_number}}</td>
-                                                <td>{{book.copies}}</td>
-                                                <td><a href="/delete-book/{{book.id}}/"><button type="button" style="background-color: red; color: white; padding: 2px; border-color: red; border-radius: 5px;">Remove</button></a>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <h3 class="text-dark mb-1" style="font-weight: bold;color: var(--bs-gray);margin-top: 20PX;">ADD BOOK</h3>
+                </div><!-- Start: Login Form Clean -->
+                <section class="login-clean">
+                    <form method="post" style="border-radius: 35px;border: 2px solid var(--bs-red);width: 450px;max-width: 450px;">
+                        {% csrf_token %}
+                        <h2 class="visually-hidden">Login Form</h2>
+                        <div class="illustration"><i class="fa fa-book" style="color: var(--bs-red);"></i></div><input class="form-control" type="text" name="title" placeholder="Title" style="padding: 5px;"><input class="form-control" type="text" name="author" placeholder="Author name" style="padding: 5px;margin-top: 10px;"><input class="form-control" type="text" name="isbn_number" placeholder="ISBN number" style="padding: 5px;margin-top: 10px;"><input class="form-control" type="text" placeholder="Copies" name="copies" style="padding: 5px;margin-top: 10px;">
+                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-radius: 7px;">ADD BOOK</button></div>
+                    </form>
+                </section><!-- End: Login Form Clean -->
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">

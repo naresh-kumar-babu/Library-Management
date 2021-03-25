@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Student, Book, Borrow
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 # Create your views here.
 def home(request):
@@ -27,3 +29,24 @@ def books(request):
 def borrows(request):
     borrows = Borrow.objects.all()
     return render(request, 'library/borrows.html', {'borrows': borrows})
+
+def book_del_handler(request, book_id):
+    Book.objects.get(id=book_id).delete()
+    return redirect('books')
+
+def add_book(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+        isbn_number = request.POST.get('isbn_number')
+        copies = request.POST.get('copies')
+        book = Book(
+            isbn_number=isbn_number,
+            title=title,
+            author=author,
+            copies=copies
+            )
+        book.save()
+        return redirect('books')
+    return render(request, 'library/add-book.html')
+

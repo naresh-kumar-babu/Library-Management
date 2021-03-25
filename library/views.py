@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Student, Book, Borrow
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
+from django.utils import timezone
+from datetime import datetime
 
 # Create your views here.
 def home(request):
@@ -22,26 +22,29 @@ def home(request):
 
     return render(request, 'library/index.html', {'book_count': book_count, 'borrow_count': borrow_count, 'total_fine': total_fine, 'pending_returns':pending_returns})
 
+#Books listing
 def books(request):
     books = Book.objects.all()
     return render(request, 'library/books.html', {'books': books})
 
+#Students listing
 def students(request):
     students = Student.objects.all()
     return render(request, 'library/students.html', {'students': students})
 
+#Borrowal listing
 def borrows(request):
     borrows = Borrow.objects.all()
+    for b in borrows:
+        if b.due_date < timezone.now().date():
+            diff = datetime.now().date() - b.due_date
+            fine = diff.days * 0.75
+            s = b.borrower
+            s.fine_amount = fine
+            s.save()
     return render(request, 'library/borrows.html', {'borrows': borrows})
 
-def book_del_handler(request, book_id):
-    Book.objects.get(id=book_id).delete()
-    return redirect('books')
-
-def student_del_handler(request, student_id):
-    Student.objects.get(id=student_id).delete()
-    return redirect('students')
-
+#Add Books
 def add_book(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -58,6 +61,7 @@ def add_book(request):
         return redirect('books')
     return render(request, 'library/add-book.html')
 
+#Add Students
 def add_student(request):
     if request.method == 'POST':
         fullname = request.POST.get('fullname')
@@ -74,3 +78,12 @@ def add_student(request):
         return redirect('home')
     return render(request, 'library/add-student.html')
 
+#Deleting books
+def book_del_handler(request, book_id):
+    Book.objects.get(id=book_id).delete()
+    return redirect('books')
+
+#Deleting students
+def student_del_handler(request, student_id):
+    Student.objects.get(id=student_id).delete()
+    return redirect('students')

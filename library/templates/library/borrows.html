@@ -69,15 +69,17 @@
                                             <th>Book</th>
                                             <th>Borrowed on</th>
                                             <th>Due Date</th>
+                                            <th>Fine amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for borrow in borrows %}
                                             <tr>
                                                 <td>{{borrow.borrower}}</td>
-                                                <td>{{borrow.book}}</td>
+                                                <td>{{borrow.book.title}}</td>
                                                 <td>{{borrow.borrowed_on}}</td>
                                                 <td>{{borrow.due_date}}</td>
+                                                <td>{{borrow.borrower.fine_amount}}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

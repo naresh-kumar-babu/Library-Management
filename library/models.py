@@ -30,4 +30,4 @@ class Borrow(models.Model):
     borrower = models.OneToOneField(Student, on_delete=models.CASCADE)
     borrowed_on = models.DateField(auto_now_add=True)
     due_date = models.DateField(null=True)
-    book = models.ManyToManyField(Book)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, default=None)

@@ -61,6 +61,18 @@
                             <p class="text-primary m-0 fw-bold">Books Info</p>
                         </div>
                         <a href="{% url 'add-book' %}"><button type="button" style="background-color: green; color: white; padding: 5px; border-color: green; border-radius: 5px; margin: 20px;">+ Add Book</button></a>
+                        <div style="border-style: solid; padding: 15px; border-radius: 6px;">
+                            <p style="padding: 5px;">Sort by</p>
+                            <form method="post">
+                            {% csrf_token %}
+                                <select name="sort_by" style="width: 500px; height: 40px; padding: 5px;">
+                                    <option>Title</option>
+                                    <option>Author</option>
+                                    <option>ISBN number</option>
+                                </select>
+                                <button style="width: 70px; height: 40px;padding-left: 5px; padding-right: 5px; background-color: green; color: white; border-color: green; border-radius: 3px;">Sort</button>
+                            </form>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">

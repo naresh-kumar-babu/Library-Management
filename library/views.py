@@ -4,7 +4,7 @@ from .models import Student, Book, Borrow
 from django.utils import timezone
 from datetime import datetime
 from .quick_sort import qSort
-# Create your views here.
+
 def home(request):
     book_count = Book.objects.count
     borrow_count = Borrow.objects.count
@@ -27,7 +27,7 @@ def books(request):
     books = list(Book.objects.all())
     if request.method == 'POST':
         key = request.POST.get('sort_by')
-        qSort(books, key)
+        qSort(books, key.lower())
     return render(request, 'library/books.html', {'books': books})
 
 #Students listing

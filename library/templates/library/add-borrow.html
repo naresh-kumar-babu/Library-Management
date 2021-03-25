@@ -5,12 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Borrowals</title>
+    <title>Add Borrow</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/fontawesome5-overrides.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
 </head>
 
 <body id="page-top">
@@ -22,9 +23,9 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'borrows' %}"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fa fa-book"></i><span>Books</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fa fa-dollar"></i><span>Borrowals</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'students' %}"><i class="fa fa-book"></i><span>Students</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
@@ -55,54 +56,27 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Borrowals</h3>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Borrow Info</p>
-                        </div>
-                        <a href="{% url 'add-borrow' %}"><button type="button" style="background-color: green; color: white; padding: 5px; border-color: green; border-radius: 5px; margin: 20px;">+ Add Borrow</button></a>
-                        <div style="border-style: solid; padding: 15px; border-radius: 6px;">
-                            <p style="padding: 5px;">Sort by</p>
-                            <form method="post">
-                            {% csrf_token %}
-                                <select name="sort_by" style="width: 500px; height: 40px; padding: 5px;">
-                                    <option>Borrower</option>
-                                    <option>Book</option>
-                                    <option>Borrowed_on</option>
-                                    <option>Due_date</option>
-                                    <option>Fine_amount</option>
-                                </select>
-                                <button style="width: 70px; height: 40px;padding-left: 5px; padding-right: 5px; background-color: green; color: white; border-color: green; border-radius: 3px;">Sort</button>
-                            </form>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Borrower</th>
-                                            <th>Book</th>
-                                            <th>Borrowed on</th>
-                                            <th>Due Date</th>
-                                            <th>Fine amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for borrow in borrows %}
-                                            <tr>
-                                                <td>{{borrow.borrower}}</td>
-                                                <td>{{borrow.book.title}}</td>
-                                                <td>{{borrow.borrowed_on}}</td>
-                                                <td>{{borrow.due_date}}</td>
-                                                <td>{{borrow.borrower.fine_amount}}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <h3 class="text-dark mb-1" style="font-weight: bold;color: var(--bs-gray);margin-top: 20PX;">LEND BOOK</h3>
+                </div><!-- Start: Login Form Clean -->
+                <section class="login-clean">
+                    <form method="post" style="border-radius: 35px;border: 2px solid var(--bs-red);width: 450px;max-width: 450px;">
+                        {% csrf_token %}
+                        <h2 class="visually-hidden">Borrow Form</h2>
+                        <div class="illustration"><i class="fa fa-book" style="color: var(--bs-red);"></i></div>
+                        <select class="form-control" name="borrower" placeholder="Borrower" style="padding: 5px;margin-top: 10px;">
+                        {% for student in students %}
+                            <option>{{student.fullname}}</option>
+                        {% endfor %}
+                        </select>
+                        <select class="form-control" name="book" placeholder="Book" style="padding: 5px;margin-top: 10px;">
+                        {% for book in books %}
+                            <option>{{book.title}}</option>
+                        {% endfor %}
+                        </select>
+                        <input type="date" name="due_date" class="form-control" style="padding: 5px;margin-top: 10px;">
+                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-radius: 7px;">LEND BOOK</button></div>
+                    </form>
+                </section><!-- End: Login Form Clean -->
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">

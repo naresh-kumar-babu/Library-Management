@@ -40,7 +40,10 @@ def students(request):
 
 #Borrow listing
 def borrows(request):
-    borrows = Borrow.objects.all()
+    borrows = list(Borrow.objects.all())
+    if request.method == 'POST':
+        key = request.POST.get('sort_by')
+        qSort(borrows, key.lower())
     for b in borrows:
         if b.due_date < timezone.now().date():
             diff = datetime.now().date() - b.due_date
@@ -81,8 +84,24 @@ def add_student(request):
             email=email
         )
         student.save()
-        return redirect('home')
+        return redirect('students')
     return render(request, 'library/add-student.html')
+
+def add_borrow(request):
+    students = Student.objects.all()
+    books = Book.objects.all()
+    if request.method == 'POST':
+        borrower = request.POST.get('borrower')
+        due_date = request.POST.get('due_date')
+        book = request.POST.get('book')
+        borrow = Borrow(
+            borrower=Student.objects.get(fullname=borrower),
+            due_date=due_date,
+            book=Book.objects.get(title=book)
+        )
+        borrow.save()
+        return redirect('borrows')
+    return render(request, 'library/add-borrow.html', {'students': students, 'books': books})
 
 #Deleting books
 def book_del_handler(request, book_id):

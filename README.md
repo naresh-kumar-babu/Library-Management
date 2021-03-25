@@ -12,3 +12,13 @@
   <li>Can View Students that are registered into system.</li>
  </ul>
  
+ ------
+ 
+ ### Student
+ 
+ <ul>
+  <li>Create account and Login.</li>
+  <li>Can view their issued book only with expiry date and fine</li>
+ </ul>
+ 
+ 

@@ -31,3 +31,6 @@ class Borrow(models.Model):
     borrowed_on = models.DateField(auto_now_add=True)
     due_date = models.DateField(null=True)
     book = models.OneToOneField(Book, on_delete=models.CASCADE, default=None)
+
+    def __str__(self):
+        return str(self.borrower)+"-"+str(self.book)

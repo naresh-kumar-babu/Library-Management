@@ -17,7 +17,7 @@ def home(request):
 
     #Finding the pending returns
     for s in students:
-        if s != 0:
+        if s > 0:
             pending_returns += 1
 
     return render(request, 'library/index.html', {'book_count': book_count, 'borrow_count': borrow_count, 'total_fine': total_fine, 'pending_returns':pending_returns})

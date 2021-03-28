@@ -10,7 +10,15 @@ def home(request):
     borrow_count = Borrow.objects.count
 
     pending_returns = 0
-
+    
+    borrows = list(Borrow.objects.all())
+    for b in borrows:
+        if b.due_date < timezone.now().date():
+            diff = datetime.now().date() - b.due_date
+            fine = diff.days * 0.75
+            s = b.borrower
+            s.fine_amount = fine
+            s.save()    
     # Total fine calculation
     students = list(Student.objects.filter().values_list('fine_amount', flat=True))
     total_fine = sum(students)
@@ -32,6 +40,14 @@ def books(request):
 
 #Students listing
 def students(request):
+    borrows = list(Borrow.objects.all())
+    for b in borrows:
+        if b.due_date < timezone.now().date():
+            diff = datetime.now().date() - b.due_date
+            fine = diff.days * 0.75
+            s = b.borrower
+            s.fine_amount = fine
+            s.save()    
     students = list(Student.objects.all())
     if request.method == 'POST':
         key = request.POST.get('sort_by')

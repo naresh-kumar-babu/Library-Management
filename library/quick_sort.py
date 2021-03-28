@@ -10,9 +10,9 @@ def partition(a,i,j, key):
   pivot = j
   j-=1
   while i<j:
-    while getattr(a[i], key).lower() < getattr(a[pivot], key).lower():
+    while str(getattr(a[i], key)).lower() < str(getattr(a[pivot], key)).lower():
       i+=1
-    while getattr(a[j], key).lower() > getattr(a[pivot], key).lower():
+    while str(getattr(a[j], key)).lower() > str(getattr(a[pivot], key)).lower():
       j-=1
     if i<j:
       a[i],a[j]=a[j],a[i]

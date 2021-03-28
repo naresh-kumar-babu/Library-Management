@@ -48,9 +48,9 @@ def borrows(request):
         if b.due_date < timezone.now().date():
             diff = datetime.now().date() - b.due_date
             fine = diff.days * 0.75
-            borrower = Borrow.objects.get(id=b.id)
-            borrower.fine_amount = str(fine)
-            borrower.save()
+            s = b.borrower
+            s.fine_amount = fine
+            s.save()
     return render(request, 'library/borrows.html', {'borrows': borrows})
 
 # Add Books
@@ -97,8 +97,7 @@ def add_borrow(request):
         borrow = Borrow(
             borrower=Student.objects.get(fullname=borrower),
             due_date=due_date,
-            book=Book.objects.get(title=book),
-            fine_amount = "0"
+            book=Book.objects.get(title=book)
         )
         borrow.save()
         return redirect('borrows')

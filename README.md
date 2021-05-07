@@ -1,4 +1,5 @@
-# Library-Management System
+# Library-Management System  
+[![Django CI](https://github.com/TechieNK/Library-Management/actions/workflows/django.yml/badge.svg)](https://github.com/TechieNK/Library-Management/actions/workflows/django.yml)
 
 ## Functions
 ------

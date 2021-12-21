@@ -3,7 +3,7 @@ python3
 *.log
 *.pot
 *.pyc
-__pycache__
+__pycache__/
 # Python # 
 *.py[cod] 
 *$py.class 
